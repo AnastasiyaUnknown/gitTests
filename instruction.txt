@@ -1,3 +1,7 @@
+Запуск:
+mvn clean test
+mvn allure:report
+
 Написать 3-5 функциональных тестов для личного профиля пользователя сайта https://github.com/
 Плюсом будет использование GitHub Rest API v3 https://developer.github.com/v3/
 

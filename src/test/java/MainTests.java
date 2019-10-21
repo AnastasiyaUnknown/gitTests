@@ -1,7 +1,3 @@
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,14 +8,15 @@ import java.util.Date;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class MainTests extends AppManager {
+public class MainTests extends AppManager{
 
     ProfileFunctions profFunc = new ProfileFunctions();
+    String url = "https://github.com";
 
     @Test
-    @DisplayName("Изменение биографии и локации")
+    @DisplayName("Edit bio and location")
     public void editInfoAboutUser(){
-        open("https://github.com");
+        open(url);
         profFunc.auth();
         profFunc.openProfile();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -31,12 +28,22 @@ public class MainTests extends AppManager {
     }
 
     @Test
-    @DisplayName("Загрузка новой аватарки")
+    @DisplayName("Upload new avatar")
     public void uploadAvatar(){
-        open("https://github.com");
+        open(url);
         profFunc.auth();
         profFunc.openProfile();
         profFunc.newAvatar();
         assertEquals("Your profile picture has been updated. It may take a few moments to update across the site.", $("#js-flash-container").getText());
+    }
+
+    @Test
+    @DisplayName("Set status")
+    public void addNewStatus(){
+        open(url);
+        profFunc.auth();
+        profFunc.goToStatus();
+        profFunc.addStatus();
+        assertEquals("I may be slow to respond.", $(".d-inline-block.text-gray-dark.v-align-text-top.text-left").getText());
     }
 }
